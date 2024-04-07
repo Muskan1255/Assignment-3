@@ -1,0 +1,44 @@
+<h1>
+    Purchase
+</h1>
+<img src='{{imageUrl}}' alt='{{currentImage}}' />
+<p>
+    {{fileName}}
+</p>
+<p>{{description}}</p>
+
+<p>${{price}}</p>
+<button>Purchase</button>
+<button>Cancel</button>
+<script>
+    const generatePopup = (message,action) => {
+
+        const popupContainer = document.createElement('div');
+        
+        popupContainer.classList.add('popup_container');
+        
+        popupContainer.innerHTML = `
+            <div class='popup'>
+                <p>${message}</p>
+                <form method="POST" action="/api/payment/placeOrder">
+                <input type="hidden" name="action" value="${action}">
+                <button>Close</button>
+                </form>
+            </div>
+        `;
+        const popupBtn = popupContainer.querySelector('button');
+        document.body.appendChild(popupContainer);
+    }
+    const purchaseBtn = document.querySelector('button');
+    const cancelBtn = document.querySelectorAll('button')[ 1 ];
+
+    purchaseBtn.addEventListener('click', () => {
+        generatePopup('Thank you for your purchase!','success');
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        generatePopup('Purchase canceled','cancel');
+    });
+
+
+</script>
